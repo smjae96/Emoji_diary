@@ -5,7 +5,7 @@
 
 <mapper namespace="com.sim.emoji.mapper.UserMapper">
 
-    <resultMap id="UserResultMap" type="com.sim.emoji.model.Users">
+    <resultMap id="UserResultMap" type="com.sim.emoji.model.User">
         <id property="id" column="id" />
         <result property="userId" column="user_id" />
         <result property="userPw" column="user_pw" />
@@ -18,11 +18,11 @@
         SELECT * FROM users
     </select>
 
-    <select id="findById" parameterType="Long" resultMap="UserResultMap">
-        SELECT * FROM users WHERE id = #{id}
+    <select id="findByUserId" parameterType="String" resultMap="UserResultMap">
+        SELECT * FROM users WHERE user_id = #{userId}
     </select>
 
-    <insert id="insert" parameterType="com.sim.emoji.model.Users">
+    <insert id="insert" parameterType="com.sim.emoji.model.User">
         INSERT INTO users(user_id, user_pw, user_name, user_nickname, user_link)
         VALUES(#{userId}, #{userPw}, #{userName}, #{userNickname}, #{userLink})
         <selectKey keyProperty="id" order="AFTER" resultType="Long">
@@ -30,7 +30,7 @@
         </selectKey>
     </insert>
 
-    <update id="update" parameterType="com.sim.emoji.model.Users">
+    <update id="update" parameterType="com.sim.emoji.model.User">
         UPDATE users
         SET user_id = #{userId}, user_pw = #{userPw}, user_name = #{userName},
         user_nickname = #{userNickname}, user_link = #{userLink}
@@ -40,5 +40,13 @@
     <delete id="delete" parameterType="Long">
         DELETE FROM users WHERE id = #{id}
     </delete>
+<!--회원가입 시 id와 닉네임 중복체크 쿼리-->
+    <select id="countByUserId" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM users WHERE user_id = #{userId}
+    </select>
+
+    <select id="countByUserNickname" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM users WHERE user_nickname = #{userNickname}
+    </select>
 
 </mapper>

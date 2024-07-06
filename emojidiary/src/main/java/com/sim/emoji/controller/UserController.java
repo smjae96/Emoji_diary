@@ -1,25 +1,22 @@
 package com.sim.emoji.controller;
 
-import com.sim.emoji.model.Users;
+import com.sim.emoji.model.User;
 import com.sim.emoji.service.UserService;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
-    }
-
-    @GetMapping("/")
-    public String index() {
-        return "index"; // index.html 템플릿 이름
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/login")
@@ -28,32 +25,51 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String userId, @RequestParam String userPw, Model model) {
-        Users user = userService.findByUserId(userId);
-        if (user != null && user.getUserPw().equals(userPw)) {
-            model.addAttribute("user", user);
+    public String login(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw, Model model, HttpSession session) {
+        User user = userService.findByUserId(userId);
+
+        if (user != null && userService.isPasswordValid(userPw, user.getUserPw())) {
+            session.setAttribute("user", user);
             return "redirect:/profile";
         } else {
-            model.addAttribute("error", "Invalid credentials. Please try again.");
+            model.addAttribute("error", "아이디 혹은 비밀번호가 일치하지 않습니다.");
             return "login";
         }
     }
 
     @GetMapping("/signup")
     public String showSignUpForm(Model model) {
-        model.addAttribute("user", new Users());
+        model.addAttribute("user", new User());
         return "signup";
     }
 
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute Users user, Model model) {
+    public String signUp(@ModelAttribute User user, Model model) {
+        if (userService.isUserIdDuplicate(user.getUserId())) {
+            model.addAttribute("error", "이미 존재하는 아이디입니다!");
+            return "signup";
+        }
+        if (userService.isUserNicknameDuplicate(user.getUserNickname())) {
+            model.addAttribute("error", "이미 존재하는 닉네임입니다!");
+            return "signup";
+        }
         userService.createUser(user);
-        model.addAttribute("user", user);
-        return "redirect:/profile";
+        return "redirect:/login"; // 회원가입 후 로그인 페이지로 리다이렉트
     }
 
     @GetMapping("/profile")
-    public String showProfile() {
+    public String showProfile(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login";
+        }
+        model.addAttribute("user", user);
         return "profile";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화
+        return "redirect:/login"; // 로그아웃 후 로그인 페이지로 리다이렉트
     }
 }
