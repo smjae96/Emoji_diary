@@ -1,6 +1,8 @@
 package com.sim.emoji.controller;
 
+import com.sim.emoji.model.Diary;
 import com.sim.emoji.model.User;
+import com.sim.emoji.service.DiaryService;
 import com.sim.emoji.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,14 +10,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/")
 public class UserController {
     private final UserService userService;
+    private final DiaryService diaryService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, DiaryService diaryService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.diaryService = diaryService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -27,8 +33,7 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestParam("userId") String userId, @RequestParam("userPw") String userPw, Model model, HttpSession session) {
         User user = userService.findByUserId(userId);
-
-        if (user != null && userService.isPasswordValid(userPw, user.getUserPw())) {
+        if (user != null && passwordEncoder.matches(userPw, user.getUserPw())) {
             session.setAttribute("user", user);
             return "redirect:/profile";
         } else {
@@ -63,7 +68,9 @@ public class UserController {
         if (user == null) {
             return "redirect:/login";
         }
+        List<Diary> diaries = diaryService.getDiariesByDiaryWriter(user.getId());
         model.addAttribute("user", user);
+        model.addAttribute("diaries", diaries);
         return "profile";
     }
 

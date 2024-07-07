@@ -2,32 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Sign Up</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/signup.css">
 </head>
 <body>
-<h1>Sign Up</h1>
+<h1>회원가입</h1>
 <form th:action="@{/signup}" th:object="${user}" method="post">
     <div>
-        <label for="userId">User ID:</label>
+        <label for="userId">ID:</label>
         <input type="text" id="userId" th:field="*{userId}" required>
     </div>
     <div>
-        <label for="userPw">Password:</label>
+        <label for="userPw">PW:</label>
         <input type="password" id="userPw" th:field="*{userPw}" required>
     </div>
     <div>
-        <label for="userName">Name:</label>
+        <label for="userName">이름:</label>
         <input type="text" id="userName" th:field="*{userName}" required>
     </div>
     <div>
-        <label for="userNickname">Nickname:</label>
+        <label for="userNickname">닉네임:</label>
         <input type="text" id="userNickname" th:field="*{userNickname}" required>
     </div>
-    <div>
-        <label for="userLink">Link:</label>
-        <input type="text" id="userLink" th:field="*{userLink}">
-    </div>
-    <div>
-        <button type="submit">Sign Up</button>
+    <div id="loginBtn">
+        <button type="submit">회원가입</button>
     </div>
     <div th:if="${error}" style="color: red;">
         <p th:text="${error}"></p>

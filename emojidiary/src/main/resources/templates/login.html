@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
 <h2>로그인</h2>
 <form action="/login" method="post">
     <div>
-        <label for="userId">아이디:</label>
+        <label for="userId">ID:</label>
         <input type="text" id="userId" name="userId" required>
     </div>
     <div>
-        <label for="userPw">비밀번호:</label>
+        <label for="userPw">PW:</label>
         <input type="password" id="userPw" name="userPw" required>
     </div>
-    <div>
+    <div id="loginBtn">
         <button type="submit">로그인</button>
     </div>
 </form>

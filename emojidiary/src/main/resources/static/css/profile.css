@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #FFB6C1;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.header-left {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.header-right {
+    font-size: 1em;
+}
+
+#logout-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#logout-button:hover {
+    background-color: #0056b3;
+}
+
+main {
+    padding: 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#sort-order, #search, #write-diary-button {
+    padding: 5px;
+    font-size: 1em;
+}
+
+#write-diary-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#write-diary-button:hover {
+    background-color: #218838;
+}
+
+.diary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.diary-box {
+    background-color: #f1f3f5;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.diary-box h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+}
+
+.diary-box p {
+    margin: 0 0 10px 0;
+}
+
+.diary-date {
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+footer {
+    padding: 10px 20px;
+    background-color: #FFB6C1;
+    border-top: 1px solid #dee2e6;
+    text-align: center;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
