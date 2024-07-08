@@ -91,9 +91,11 @@ main {
 }
 
 footer {
-    padding: 10px 20px;
-    background-color: #FFB6C1;
-    border-top: 1px solid #dee2e6;
+    background-color: #FFB6C1; /* 연분홍색 */
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     text-align: center;
 }
 

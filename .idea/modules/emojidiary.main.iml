@@ -4,5 +4,8 @@
     <content url="file://$MODULE_DIR$/../../emojidiary/build/generated/sources/annotationProcessor/java/main">
       <sourceFolder url="file://$MODULE_DIR$/../../emojidiary/build/generated/sources/annotationProcessor/java/main" isTestSource="false" generated="true" />
     </content>
+    <content url="file://$MODULE_DIR$/../../emojidiary/src/main" dumb="true">
+      <excludeFolder url="file://$MODULE_DIR$/../../emojidiary/src/main/resources/static/css" />
+    </content>
   </component>
 </module>
