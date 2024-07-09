@@ -9,5 +9,6 @@ import java.util.List;
 @Mapper
 public interface DiaryMapper {
     List<Diary> findByDiaryWriter(@Param("diaryWriter") Long diaryWriter);
+    void saveDiary(Diary diary);
 }
 

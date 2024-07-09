@@ -21,4 +21,9 @@
         SELECT * FROM diary WHERE diary_writer = #{diaryWriter}
     </select>
 
+    <insert id="saveDiary">
+        INSERT INTO diary (diary_writer, diary_title, diary_content, diary_image, diary_date, emoji_mood, emoji_weather, emoji_people)
+        VALUES (#{diaryWriter}, #{diaryTitle}, #{diaryContent}, #{diaryImage}, #{diaryDate}, #{emojiMood}, #{emojiWeather}, #{emojiPeople})
+    </insert>
+
 </mapper>

@@ -46,9 +46,19 @@ main {
     margin-bottom: 20px;
 }
 
+#searching {
+    display: flex;
+    justify-content: left;
+    width: 45%;
+}
+
 #sort-order, #search, #write-diary-button {
     padding: 5px;
     font-size: 1em;
+}
+#search {
+    width: 100%;
+    margin-left: 5%;
 }
 
 #write-diary-button {
