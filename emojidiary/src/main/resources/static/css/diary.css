@@ -22,6 +22,17 @@ header {
     font-size: 1em;
 }
 
+.header-title {
+    color: black;
+    text-decoration: none;
+}
+
+.firstLine {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3%;
+}
+
 #logout-button {
     background-color: #007bff;
     color: white;
@@ -44,6 +55,9 @@ main {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+}
+#search-and-sort-form {
+    width: 75%;
 }
 
 #searching {
@@ -80,10 +94,12 @@ main {
 }
 
 .diary-box {
-    background-color: #f1f3f5;
+
+    background-color: #ffe4e1;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
 .diary-box h2 {
@@ -103,7 +119,6 @@ main {
 footer {
     background-color: #FFB6C1; /* 연분홍색 */
     padding: 10px;
-    position: fixed;
     bottom: 0;
     width: 100%;
     text-align: center;
@@ -116,4 +131,30 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+.pagination {
+    margin-top: 5px;
+    text-align: center;
+}
+
+.pagination a {
+            text-decoration: none;
+            color: brown;
+}
+
+.pagination a.disabled {
+            color: grey;
+            pointer-events: none;
+            text-decoration: none;
+}
+
+.firstPage-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 5px;
+}
+.firstPage {
+            color: red;
+            text-decoration: none;
 }

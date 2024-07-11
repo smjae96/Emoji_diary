@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -26,6 +27,29 @@ public class DiaryController {
     @Autowired
     private DiaryService diaryService;
 
+    @GetMapping("/list")
+    public String showDiaries(Model model, HttpSession session,
+                              @RequestParam(required = false, defaultValue = "DESC") String order,
+                              @RequestParam(required = false) String keyword,
+                              @RequestParam(required = false, defaultValue = "0") int page) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            int limit = 5;
+            int offset = limit * page;
+            List<Diary> diaries = diaryService.getDiariesByDiaryWriterAndKeyword(user.getId(), keyword, order, limit, offset);
+            int totalDiaries = diaryService.countDiariesByDiaryWriter(user.getId(), keyword);
+            int totalPages = (int) Math.ceil((double) totalDiaries / limit);
+            model.addAttribute("user", user);
+            model.addAttribute("order", order);
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("diaries", diaries);
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("currentPage", page);
+            return "diary";
+        } else {
+            return "redirect:/login";
+        }
+    }
     @GetMapping("/write")
     public String showDiaryWriteForm(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -36,6 +60,7 @@ public class DiaryController {
             return "redirect:/login";
         }
     }
+
     @PostMapping("/save")
     public String saveDiary(@RequestParam("diaryTitle") String diaryTitle,
                             @RequestParam("diaryContent") String diaryContent,

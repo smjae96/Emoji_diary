@@ -18,7 +18,28 @@
     </resultMap>
 
     <select id="findByDiaryWriter" parameterType="Long" resultMap="DiaryResultMap">
-        SELECT * FROM diary WHERE diary_writer = #{diaryWriter}
+        SELECT * FROM diary WHERE diary_writer = #{diaryWriter} ORDER BY diary_date DESC
+    </select>
+
+    <select id="findByDiaryWriterAndKeyword" parameterType="map" resultMap="DiaryResultMap">
+        SELECT * FROM diary
+        WHERE diary_writer = #{diaryWriter}
+        AND (diary_title LIKE CONCAT('%', #{keyword}, '%') OR diary_content LIKE CONCAT('%', #{keyword}, '%'))
+        ORDER BY diary_date ${order}
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countDiariesByDiaryWriter" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM diary
+        WHERE diary_writer = #{diaryWriter}
+        AND (diary_title LIKE CONCAT('%', #{keyword}, '%') OR diary_content LIKE CONCAT('%', #{keyword}, '%'))
+    </select>
+
+    <select id="findByDiaryWriterWithPagination" parameterType="map" resultMap="DiaryResultMap">
+        SELECT * FROM diary
+        WHERE diary_writer = #{diaryWriter}
+        ORDER BY diary_date ${order}
+        LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <insert id="saveDiary">

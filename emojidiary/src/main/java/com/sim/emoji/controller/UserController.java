@@ -62,17 +62,28 @@ public class UserController {
         return "redirect:/login"; // 회원가입 후 로그인 페이지로 리다이렉트
     }
 
-    @GetMapping("/diary")
-    public String showDiary(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/login";
-        }
-        List<Diary> diaries = diaryService.getDiariesByDiaryWriter(user.getId());
-        model.addAttribute("user", user);
-        model.addAttribute("diaries", diaries);
-        return "diary"; // 변경된 템플릿 이름
+@GetMapping("/diary")
+public String showDiary(HttpSession session, Model model,
+                        @RequestParam(required = false, defaultValue = "0") int page,
+                        @RequestParam(required = false, defaultValue = "DESC") String order,
+                        @RequestParam(required = false) String keyword) {
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        return "redirect:/login";
     }
+    int limit = 5;
+    int offset = limit * page;
+    List<Diary> diaries = diaryService.getDiariesByDiaryWriterAndKeyword(user.getId(), keyword, order, limit, offset);
+    int totalDiaries = diaryService.countDiariesByDiaryWriter(user.getId(), keyword);
+    int totalPages = (int) Math.ceil((double) totalDiaries / limit);
+    model.addAttribute("user", user);
+    model.addAttribute("order", order);
+    model.addAttribute("keyword", keyword);
+    model.addAttribute("diaries", diaries);
+    model.addAttribute("totalPages", totalPages);
+    model.addAttribute("currentPage", page);
+    return "diary";
+}
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
