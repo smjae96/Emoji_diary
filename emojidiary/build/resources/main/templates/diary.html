@@ -173,7 +173,7 @@ function deleteDiary() {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
-
+                // 삭제가 완료되면 모달창을 닫고 페이지를 새로고침합니다.
                 closeModal();
                 window.location.reload();
             })

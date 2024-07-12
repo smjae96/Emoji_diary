@@ -14,5 +14,8 @@ public interface DiaryMapper {
     List<Diary> findByDiaryWriterWithPagination(Map<String, Object> params);
     void saveDiary(Diary diary);
     int countDiariesByDiaryWriter(Map<String, Object> params);
+    Diary getDiaryById(@Param("id") Long id);
+    Diary getDiary(@Param("id") Long id);
+    void deleteDiary(@Param("id") Long id);
 }
 

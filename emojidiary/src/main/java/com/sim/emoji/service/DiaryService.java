@@ -18,31 +18,19 @@ public class DiaryService {
         this.diaryMapper = diaryMapper;
     }
 
-//    public List<Diary> getDiariesByDiaryWriterAndKeyword(Long diaryWriter, String keyword, String order) {
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("diaryWriter", diaryWriter);
-//        params.put("keyword", keyword == null ? "" : keyword);
-//        params.put("order", order);
-//        return diaryMapper.findByDiaryWriterAndKeyword(params);
-//    }
-//
-//    public List<Diary> getDiariesByDiaryWriterWithPagination(Long diaryWriter, String order, int limit, int offset) {
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("diaryWriter", diaryWriter);
-//        params.put("order", order);
-//        params.put("limit", limit);
-//        params.put("offset", offset);
-//        return diaryMapper.findByDiaryWriterWithPagination(params);
-//    }
-public List<Diary> getDiariesByDiaryWriterAndKeyword(Long diaryWriter, String keyword, String order, int limit, int offset) {
-    Map<String, Object> params = new HashMap<>();
-    params.put("diaryWriter", diaryWriter);
-    params.put("keyword", keyword == null ? "" : keyword);
-    params.put("order", order);
-    params.put("limit", limit);
-    params.put("offset", offset);
-    return diaryMapper.findByDiaryWriterAndKeyword(params);
-}
+    public Diary getDiaryById(Long id) {
+        return diaryMapper.getDiaryById(id);
+    }
+
+    public List<Diary> getDiariesByDiaryWriterAndKeyword(Long diaryWriter, String keyword, String order, int limit, int offset) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("diaryWriter", diaryWriter);
+        params.put("keyword", keyword == null ? "" : keyword);
+        params.put("order", order);
+        params.put("limit", limit);
+        params.put("offset", offset);
+        return diaryMapper.findByDiaryWriterAndKeyword(params);
+    }
 
     public int countDiariesByDiaryWriter(Long diaryWriter, String keyword) {
         Map<String, Object> params = new HashMap<>();
@@ -55,7 +43,17 @@ public List<Diary> getDiariesByDiaryWriterAndKeyword(Long diaryWriter, String ke
         return diaryMapper.findByDiaryWriter(diaryWriter);
     }
 
+
     public void saveDiary(Diary diary) {
         diaryMapper.saveDiary(diary);
     }
+
+    public Diary getDiary(Long id) {
+        return diaryMapper.getDiary(id);
+    }
+
+    public void deleteDiary(Long id) {
+        diaryMapper.deleteDiary(id);
+    }
+
 }

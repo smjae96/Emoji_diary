@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Diary Write</title>
+    <link rel="stylesheet" href="/css/diary_write.css">
+</head>
+<body>
+<header>
+    <div class="header-left" th:text="${user.userNickname} + '님의 일기 작성'"></div>
+    <div class="header-right">
+        <button id="logout-button" onclick="location.href='/logout'">로그아웃</button>
+    </div>
+</header>
+
+<main>
+    <form action="/diary/save" method="post" enctype="multipart/form-data">
+        <div class="top-side">
+            <input type="text" name="diaryTitle" placeholder="제목을 입력하세요" required>
+            <div class="button-group">
+                <button type="button" onclick="location.href='/diary'" id="cancel">취소</button>
+                <button type="submit" id="save">저장</button>
+            </div>
+        </div>
+        <div class="section">
+            <h2>어떤 하루였나요?</h2>
+            <div class="emoji-section">
+                <label class="emoji-label">
+                    <input type="radio" name="emojiMood" value="MO01" required>
+                    <img src="/images/happy.png" alt="행복">
+                    <div>행복</div>
+                </label >
+                <label class="emoji-label">
+                    <input type="radio" name="emojiMood" value="MO02" required>
+                    <img src="/images/good.png" alt="기쁨">
+                    <div>기쁨</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiMood" value="MO03" required>
+                    <img src="/images/soso.png" alt="그럭저럭">
+                    <div>그럭저럭</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiMood" value="MO04" required>
+                    <img src="/images/sad.png" alt="슬픔">
+                    <div>슬픔</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiMood" value="MO05" required>
+                    <img src="/images/angry.png" alt="화남">
+                    <div>화남</div>
+                </label>
+            </div>
+        </div>
+        <div class="section">
+            <h2>날씨는 어땠나요?</h2>
+            <div class="emoji-section">
+                <label class="emoji-label">
+                    <input type="radio" name="emojiWeather" value="WT01" required>
+                    <img src="/images/sunny.png" alt="맑음">
+                    <div>맑음</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiWeather" value="WT02" required>
+                    <img src="/images/cloudy.png" alt="흐림">
+                    <div>흐림</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiWeather" value="WT03" required>
+                    <img src="/images/windy.png" alt="바람">
+                    <div>바람</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiWeather" value="WT04" required>
+                    <img src="/images/rainy.png" alt="비">
+                    <div>비</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiWeather" value="WT05" required>
+                    <img src="/images/snowy.png" alt="눈">
+                    <div>눈</div>
+                </label>
+            </div>
+        </div>
+        <div class="section">
+            <h2>누구를 만났나요?</h2>
+            <div class="emoji-section">
+                <label class="emoji-label">
+                    <input type="radio" name="emojiPeople" value="PO01" required>
+                    <img src="/images/friends.png" alt="친구">
+                    <div>친구</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiPeople" value="PO02" required>
+                    <img src="/images/family.png" alt="가족">
+                    <div>가족</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiPeople" value="PO03" required>
+                    <img src="/images/lover.png" alt="애인">
+                    <div>애인</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiPeople" value="PO04" required>
+                    <img src="/images/colleague.png" alt="지인">
+                    <div>지인</div>
+                </label>
+                <label class="emoji-label">
+                    <input type="radio" name="emojiPeople" value="PO05" required>
+                    <img src="/images/none.png" alt="혼자">
+                    <div>혼자</div>
+                </label>
+            </div>
+        </div>
+        <div class="section">
+            <h2>한 줄 일기</h2>
+            <textarea name="diaryContent" placeholder="내용을 입력해주세요" required></textarea>
+        </div>
+        <div class="section">
+            <h2>오늘의 사진</h2>
+            <input type="file" name="diaryImage">
+        </div>
+
+    </form>
+</main>
+
+<footer>
+    Contact: <a th:href="${user.userLink}" th:text="${user.userLink}"></a>
+</footer>
+</body>
+</html>

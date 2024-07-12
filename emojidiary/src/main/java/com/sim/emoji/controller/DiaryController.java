@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -26,6 +23,14 @@ import java.util.UUID;
 public class DiaryController {
     @Autowired
     private DiaryService diaryService;
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Diary getDiaryById(@PathVariable Long id) {
+        System.out.println(diaryService.getDiaryById(id));
+        // 일기 데이터를 데이터베이스에서 가져옵니다.
+        return diaryService.getDiaryById(id);
+    }
 
     @GetMapping("/list")
     public String showDiaries(Model model, HttpSession session,
@@ -59,6 +64,18 @@ public class DiaryController {
         } else {
             return "redirect:/login";
         }
+    }
+    @GetMapping("/edit/{id}")
+    public String editDiary(@PathVariable Long id, Model model) {
+        Diary diary = diaryService.getDiary(id);
+        model.addAttribute("diary", diary);
+        return "diary/edit";  // 일기 수정 페이지로 이동
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteDiary(@PathVariable Long id) {
+        diaryService.deleteDiary(id);
+        return "redirect:/diary";
     }
 
     @PostMapping("/save")
@@ -100,6 +117,8 @@ public class DiaryController {
 
         return "redirect:/diary";
     }
+
+
 
 
 }
